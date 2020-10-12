@@ -55,7 +55,7 @@ class HybridLoader:
 class DataLoader(data.Dataset):
 
     def reset_iterator(self, split):
-        del self._prefetch_process[split]
+        del self._prefetch_process[split]   # 删除变量
         self._prefetch_process[split] = BlobFetcher(split, self, split=='train')
         self.iterators[split] = 0
 
@@ -74,7 +74,7 @@ class DataLoader(data.Dataset):
         self.seq_per_img = opt.seq_per_img
         
         # feature related options
-        self.use_fc = getattr(opt, 'use_fc', True)
+        self.use_fc = getattr(opt, 'use_fc', True)      # getattr(object, name[, default]) 返回对象属性值，即返回opt中use_fc的值
         self.use_att = getattr(opt, 'use_att', True)
         self.use_box = getattr(opt, 'use_box', 0)
         self.norm_att_feat = getattr(opt, 'norm_att_feat', 0)
@@ -82,14 +82,14 @@ class DataLoader(data.Dataset):
         self.use_gt_box = getattr(opt, 'use_gt_box', False)
         self.kl_gt_box = getattr(opt, 'kl_gt_box', False)
 
-        # load the json file which contains additional information about the dataset
-        print('DataLoader loading json file: ', opt.input_json)
+        # load the json file which contains additional information about the dataset  加载包含关于数据集的附加信息的json文件
+        print('DataLoader loading json file: ', opt.input_json)    # opt.input_json='data/flickrtalk.json'
         self.info = json.load(open(self.opt.input_json))
         self.ix_to_word = self.info['ix_to_word']
         self.vocab_size = len(self.ix_to_word)
         # this is for flickr30k
-        if 'flickr' in opt.dataset:
-            self.wtol = self.info['wtol']
+        if 'flickr' in opt.dataset:        # opt.dataset='flickr'
+            self.wtol = self.info['wtol']  # ？？？？？？
             self.wtod = {w:i+1 for w,i in self.info['wtod'].items()} # word to detection
             self.itod = {i:w for w,i in self.wtod.items()}
             self.lemma_det_dict = {self.wtol[key]:idx for key,idx in self.wtod.items() if key in self.wtol}
