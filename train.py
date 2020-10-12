@@ -1,7 +1,7 @@
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
+from __future__ import absolute_import  # 导入标准库而非当前目录下的库
+from __future__ import division         # "/"操作符执行的截断除法变为精确除法
+from __future__ import print_function   # 即使在python2.X，使用print就得像python3.X那样加括号使用
+ 
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -13,6 +13,7 @@ import os
 from six.moves import cPickle
 import traceback
 
+# 本文import
 import models
 from dataloader import *
 import skimage.io
@@ -39,12 +40,12 @@ except ImportError:
 
 def add_summary_value(writer, key, value, iteration):
     if writer:
-        writer.add_scalar(key, value, iteration)
+        writer.add_scalar(key, value, iteration)     # tensorboardX 画图
 
 def train(opt):
     # Deal with feature things before anything
-    opt.use_fc, opt.use_att = utils.if_use_feat(opt.caption_model)
-    if opt.use_box: opt.att_feat_size = opt.att_feat_size + 5
+    opt.use_fc, opt.use_att = utils.if_use_feat(opt.caption_model)  # 调用 misc.utils.if_use_feat,返回的use_fc, use_att为布尔值
+    if opt.use_box: opt.att_feat_size = opt.att_feat_size + 5       # opt.py中use_box=0
 
     loader = DataLoader(opt)
     opt.vocab_size = loader.vocab_size
