@@ -52,7 +52,7 @@ def train(opt):
     opt.seq_length = loader.seq_length
     opt.vocab = loader.get_vocab()
 
-    tb_summary_writer = tb and tb.SummaryWriter(opt.checkpoint_path)
+    tb_summary_writer = tb and tb.SummaryWriter(opt.checkpoint_path)  # 画图
 
     infos = {}
     histories = {}
@@ -60,7 +60,7 @@ def train(opt):
         # open old infos and check if models are compatible
         # with open(os.path.join(opt.start_from, 'infos_'+opt.id+'.pkl'), 'rb') as f:
         with open(os.path.join(opt.start_from, 'infos_'+opt.start_from.split('/')[-1]+'.pkl'), 'rb') as f:
-            infos = utils.pickle_load(f)
+            infos = utils.pickle_load(f)    # 下载到infos
             saved_model_opt = infos['opt']
             need_be_same=["caption_model", "rnn_type", "rnn_size", "num_layers"]
             for checkme in need_be_same:
