@@ -56,7 +56,7 @@ class DataLoader(data.Dataset):
 
     def reset_iterator(self, split):
         del self._prefetch_process[split]   # 删除变量
-        self._prefetch_process[split] = BlobFetcher(split, self, split=='train')
+        self._prefetch_process[split] = BlobFetcher(split, self, split=='train')   # ？？？？？
         self.iterators[split] = 0
 
     def get_vocab_size(self):
@@ -99,9 +99,9 @@ class DataLoader(data.Dataset):
         
         # open the hdf5 file
         print('DataLoader loading h5 file: ', opt.input_fc_dir, opt.input_att_dir, opt.input_box_dir, opt.input_label_h5)
-        self.h5_label_file = h5py.File(self.opt.input_label_h5, 'r', driver='core')
+        self.h5_label_file = h5py.File(self.opt.input_label_h5, 'r', driver='core')  # 读h5py文件
 
-        self.fc_loader = HybridLoader(self.opt.input_fc_dir, '.npy')
+        self.fc_loader = HybridLoader(self.opt.input_fc_dir, '.npy')   # 上面的类 HybridLoader
         if 'gvd' in opt.input_att_dir:
             self.att_loader = HybridLoader(self.opt.input_att_dir, '.npy')
         else:
